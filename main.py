@@ -1,6 +1,6 @@
 import random
 
-MAX_LINES = 3  # global constant  - does not change
+MAX_LINES = 3
 MAX_BET = 100
 MIN_BET = 1
 
@@ -21,6 +21,47 @@ symbol_value = {
     "♧": 2
 }
 
+print('''                              .-------.
+                              |Jackpot|
+                  ____________|_______|____________
+                 |  __    __    ___  _____   __    |  
+                 | / _\  / /   /___\/__   \ / _\   | 
+                 | \ \  / /   //  //  / /\ \\ \  25|  
+                 | _\ \/ /___/ \_//  / /  \/_\ \ []| 
+                 | \__/\____/\___/   \/     \__/ []|
+                 |===_______===_______===_______===|
+                 ||*|\_     |*| _____ |*|\_     |*||
+                 ||*|| \ _  |*||     ||*|| \ _  |*||
+                 ||*| \_(_) |*||*BAR*||*| \_(_) |*||
+                 ||*| (_)   |*||_____||*| (_)   |*|| __
+                 ||*|_______|*|_______|*|_______|*||(__)
+                 |===_______===_______===_______===| ||
+                 ||*| _____ |*|\_     |*|  ___  |*|| ||
+                 ||*||     ||*|| \ _  |*| |_  | |*|| ||
+                 ||*||*BAR*||*| \_(_) |*|  / /  |*|| ||
+                 ||*||_____||*| (_)   |*| /_/   |*|| ||
+                 ||*|_______|*|_______|*|_______|*||_//
+                 |===_______===_______===_______===|_/
+                 ||*|  ___  |*|   |   |*| _____ |*||
+                 ||*| |_  | |*|  / \  |*||     ||*||
+                 ||*|  / /  |*| /_ _\ |*||*BAR*||*||              
+                 ||*| /_/   |*|   O   |*||_____||*||        
+                 ||*|_______|*|_______|*|_______|*||
+                 |lc=___________________________===|
+                 |  /___________________________\  |
+                 |   |                         |   |
+                _|    \_______________________/    |_
+               (_____________________________________)
+
+             _       _                        _     _            
+            | |     | |                      | |   (_)           
+         ___| | ___ | |_ _ __ ___   __ _  ___| |__  _ _ __   ___ 
+        / __| |/ _ \| __| '_ ` _ \ / _` |/ __| '_ \| | '_ \ / _ |
+        \__ \ | (_) | |_| | | | | | (_| | (__| | | | | | | |  __/
+        |___/_|\___/ \__|_| |_| |_|\__,_|\___|_| |_|_|_| |_|\___|
+
+''')
+
 
 def check_winnings(columns, lines, bet, values):
     winnings = 0
@@ -39,24 +80,21 @@ def check_winnings(columns, lines, bet, values):
 
 
 def get_slot_machine_spin(rows, cols, symbols):
-    # randomly pick number of rows from each column
     all_symbols = []
     for symbol, symbol_count in symbols.items():
         for _ in range(symbol_count):
-            # _ 'underscore' anonymous variable -> whenever you need to loop through something, but you don't care about the counter that iteration value.
-            # this is so that you don't have an unused variable anymore.
             all_symbols.append(symbol)
 
-    columns = []  # nested list
-    for _ in range(cols):  # generates column
+    columns = []
+    for _ in range(cols):
         column = []
-        current_symbols = all_symbols[:]  # [:] slice operator -> makes a copy of 'all_symbols'
+        current_symbols = all_symbols[:]
         for _ in range(rows):
             value = random.choice(current_symbols)
             current_symbols.remove(value)
             column.append(value)
 
-        column.append(column)
+        columns.append(column)
 
     return columns
 
@@ -64,7 +102,7 @@ def get_slot_machine_spin(rows, cols, symbols):
 def print_slot_machine(columns):
     for row in range(len(columns[0])):
         for i, column in enumerate(columns):
-            if i != len(columns) - 1:  # length of col minus 1 is the max index, to access an element in cols list.
+            if i != len(columns) - 1:
                 print(column[row], end=" | ")
             else:
                 print(column[row], end="")
@@ -72,7 +110,7 @@ def print_slot_machine(columns):
         print()
 
 
-def deposit():  # collect the user input
+def deposit():
     while True:
         amount = input("What would you like to deposit? $")
         if amount.isdigit():
@@ -80,7 +118,7 @@ def deposit():  # collect the user input
             if amount > 0:
                 break
             else:
-                print("Amount must be greater than 0")
+                print("Amount must be greater than 0.")
         else:
             print("Please enter a number.")
 
@@ -99,6 +137,8 @@ def get_number_of_lines():
                 print("Enter a valid number of lines.")
         else:
             print("Please enter a number.")
+
+    return lines
 
 
 def get_bet():
